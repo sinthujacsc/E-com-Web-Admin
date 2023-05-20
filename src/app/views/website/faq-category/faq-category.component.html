@@ -1,0 +1,83 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>FAQ Category</strong> 
+                </div>
+                <form [formGroup]="faqCategoryForm" (ngSubmit)="onSubmit()">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="nameOf">FAQ Category</label>
+                                    <input type="text" class="form-control" [ngClass]="faqCategoryForm.get('nameOf').errors ? 'is-invalid' : 'is-valid' " id="nameOf" formControlName="nameOf" >
+                                    <div class="valid-feedback" *ngIf="faqCategoryForm.get('nameOf').touched && faqCategoryForm.get('nameOf').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="col-md-12">
+                                <div class="form-check pb-2">
+                                    <input class="form-check-input" type="checkbox" value="option1" id="checkbox1" formControlName="isActive" (change)="checkValue($event)" [(ngModel)]="checked">
+                                    <label class="form-check-label" for="checkbox1">
+                                        Active
+                                    </label>
+                                </div>
+                            </div>
+                            
+                           
+                        </div>
+
+                    </div>
+                    <div class="card-footer" style="margin-bottom: 10px;">
+                        <button style="float: left;margin-bottom: 10px;" type="submit" class="btn btn-sm btn-success" [disabled]="!faqCategoryForm.valid"><i class="fa fa-dot-circle-o"></i> <b>Submit</b></button>
+                        <button style="float: right;margin-bottom: 10px;" type="reset" class="btn btn-sm btn-warning"><i class="fa fa-ban"></i><b>Reset</b> </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>FAQ Categorys</strong> List
+                </div>
+                <div class="card-body">
+                    <div class="header">
+                        <input class="form-control" [(ngModel)]="searchText" (ngModelChange)="querySearch()" placeholder="Search...">
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="60%">FAQ Category </th>
+                                    <th width="10%">Active</th>
+
+                                    <th width="10px"></th>
+                                    <th width="10px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let pd of allfaqCategory | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
+                                    <td width="60%"> {{pd.nameOf}} </td>
+                                   
+                                    <td width="10%" *ngIf="pd.isActive=='Y'"> ✅ </td>
+                                    <td width="10%" *ngIf="pd.isActive=='N'"> ❌ </td>
+                                    <td width="10px">
+                                        <i class="fa fa-edit fa-lg text-success" (click)="onEdit(pd.custId)"></i>
+                                    </td>
+                                    <td width="10px">
+                                        <i class="fa fa-trash fa-lg text-danger" (click)="onDelete(pd.custId)"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

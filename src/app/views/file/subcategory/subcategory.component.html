@@ -1,0 +1,111 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Sub Category</strong> 
+                </div>
+                <form [formGroup]="subCategoryForm" (ngSubmit)="onSubmit()">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="nameOf">Sub Category</label>
+                                    <input type="text" class="form-control" [ngClass]="subCategoryForm.get('nameOf').errors ? 'is-invalid' : 'is-valid' " id="nameOf" formControlName="nameOf" >
+                                    <div class="valid-feedback" *ngIf="subCategoryForm.get('nameOf').touched && subCategoryForm.get('nameOf').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <div class="col-md-12">
+                                <div class="form-check pb-2">
+                                    <input class="form-check-input" type="checkbox" value="option1" id="checkbox1" formControlName="isActive" (change)="checkValue($event)" [(ngModel)]="checked">
+                                    <label class="form-check-label" for="checkbox1">
+                                        Active
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                
+                                <mat-form-field>
+                                    <mat-label style="padding-left: 10px;">Sub Category Image</mat-label> 
+
+                                    <button type="button" mat-icon-button matPrefix (click)="f1_input.click()">
+                                        <mat-icon>attach_file</mat-icon>
+                                    </button>
+                                    <input type="text" readonly matInput [formControl]="subCategory_profile" />
+                                    <input accept="image/png,image/jpeg,image/jpg" type="file" multiple hidden #f1_input
+                                        (change)="handleImage(f1_input.files!, $event)" />
+                                </mat-form-field>
+                                <div class="progress" style="margin-top: -10px !important;">
+                                    <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{'width':percentage}"
+                                        aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+        
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <img style="width: 150px; height:150px;" [src]="subCategoryImageSrc">
+                            </div>
+
+
+                           
+                        </div>
+
+                    </div>
+                    <div class="card-footer" style="margin-bottom: 10px;">
+                        <button style="float: left;margin-bottom: 10px;" type="submit" class="btn btn-sm btn-success" [disabled]="!subCategoryForm.valid"><i class="fa fa-dot-circle-o"></i> <b>Submit</b></button>
+                        <button style="float: right;margin-bottom: 10px;" type="reset" class="btn btn-sm btn-warning"><i class="fa fa-ban"></i><b>Reset</b> </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Sub Category</strong> List
+                </div>
+                <div class="card-body">
+                    <div class="header">
+                        <input class="form-control" [(ngModel)]="searchText" (ngModelChange)="querySearch()" placeholder="Search...">
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="30%">Image</th>
+                                    <th width="60%">Name</th>
+                                    <th width="10%">Active</th>
+
+                                    <th width="10px"></th>
+                                    <th width="10px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let pd of allsubCategory | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
+                                    <td width="30%"> <img src="{{serverImgPath}}{{pd.imgPath}}" style="height: 50px; width:50px;" ></td>
+                                    <td width="60%"> {{pd.nameOf}} </td>
+                                    <td width="10%" *ngIf="pd.isActive=='Y'"> ✅ </td>
+                                    <td width="10%" *ngIf="pd.isActive=='N'"> ❌ </td>
+                                    <td width="10px">
+                                        <i class="fa fa-edit fa-lg text-success" (click)="onEdit(pd.custId)"></i>
+                                    </td>
+                                    <td width="10px">
+                                        <i class="fa fa-trash fa-lg text-danger" (click)="onDelete(pd.custId)"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

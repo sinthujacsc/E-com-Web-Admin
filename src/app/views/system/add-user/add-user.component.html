@@ -1,0 +1,156 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Add User</strong>
+                </div>
+                <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="name">User Name</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="addUserForm.get('name').errors ? 'is-invalid' : 'is-valid' "
+                                        id="name" formControlName="name">
+                                    <div class="valid-feedback"
+                                        *ngIf="addUserForm.get('name').touched && addUserForm.get('name').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="email">Email</label>
+                                    <input type="email" class="form-control"
+                                        [ngClass]="addUserForm.get('email').errors ? 'is-invalid' : 'is-valid' "
+                                        id="email" formControlName="email">
+                                    <div class="valid-feedback"
+                                        *ngIf="addUserForm.get('email').touched && addUserForm.get('email').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="password">Password</label>
+                                    <input type="password" class="form-control"
+                                        [ngClass]="addUserForm.get('password').errors ? 'is-invalid' : 'is-valid' "
+                                        id="password" formControlName="password">
+                                    <div class="valid-feedback"
+                                        *ngIf="addUserForm.get('password').touched && addUserForm.get('password').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="password_confirmation">Confirm Password</label>
+                                    <input type="password" class="form-control"
+                                        [ngClass]="addUserForm.get('password_confirmation').errors ? 'is-invalid' : 'is-valid' "
+                                        id="password_confirmation" formControlName="password_confirmation">
+                                    <div class="valid-feedback"
+                                        *ngIf="addUserForm.get('password_confirmation').touched && addUserForm.get('password_confirmation').errors?.required">
+                                        This value is required.
+                                    </div>
+                                    <div class="valid-feedback"
+                                        *ngIf="addUserForm.get('password_confirmation').touched && addUserForm.get('password_confirmation').hasError('unmatch')">
+                                        The password is not same.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+                            <br>
+                            <br>
+                            <div class="col-md-12">
+                                <div class="form-check pb-2">
+                                    <input class="form-check-input" type="checkbox" value="option1" id="checkbox1"
+                                        formControlName="isActive" (change)="checkValue($event)" [(ngModel)]="checked">
+                                    <label class="form-check-label" for="checkbox1">
+                                        Active
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+
+                                <mat-form-field>
+                                    <mat-label style="padding-left: 10px;">User Image</mat-label>
+
+                                    <button type="button" mat-icon-button matPrefix (click)="f1_input.click()">
+                                        <mat-icon>attach_file</mat-icon>
+                                    </button>
+                                    <input type="text" readonly matInput [formControl]="user_profile" />
+                                    <input accept="image/png,image/jpeg,image/jpg" type="file" multiple hidden #f1_input
+                                        (change)="handleImage(f1_input.files!, $event)" />
+                                </mat-form-field>
+                                <div class="progress" style="margin-top: -10px !important;">
+                                    <div class="progress-bar bg-success" role="progressbar"
+                                        [ngStyle]="{'width':percentage}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <img style="width: 150px; height:150px;" [src]="userImageSrc">
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="card-footer" style="margin-bottom: 10px;">
+                        <button style="float: left;margin-bottom: 10px;" type="submit" class="btn btn-sm btn-success"
+                            [disabled]="!addUserForm.valid"><i class="fa fa-dot-circle-o"></i> <b>Submit</b></button>
+                        <button style="float: right;margin-bottom: 10px;" type="reset" class="btn btn-sm btn-warning"><i
+                                class="fa fa-ban"></i><b>Reset</b> </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>User</strong> List
+                </div>
+                <div class="card-body">
+                    <div class="header">
+                        <input class="form-control" [(ngModel)]="searchText" (ngModelChange)="querySearch()" placeholder="Search...">
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="20%">Image</th>
+                                    <th width="30%">Name</th>
+                                    <th width="30%">Email</th>
+                                    <th width="10%">Active</th>
+                                    <th width="10px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let pd of allUser | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
+                                    <td width="20%"> <img src="{{serverImgPath}}{{pd.imagePath}}" style="height: 50px; width:50px;" ></td>
+                                    <td width="30%"> {{pd.name}} </td>
+                                    <td width="30%"> {{pd.email}} </td>
+                                    <td width="10%" *ngIf="pd.isActive=='Y'"> ✅ </td>
+                                    <td width="10%" *ngIf="pd.isActive=='N'"> ❌ </td>
+                                  
+                                    <td width="10px">
+                                        <i class="fa fa-trash fa-lg text-danger" (click)="onDelete(pd.id)"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

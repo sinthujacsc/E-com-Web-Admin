@@ -1,0 +1,97 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="animated fadeIn">
+    <div class="row">
+
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Customer Enquiry</strong> List
+                </div>
+                <div class="card-body">
+                    <div class="header">
+                        <input class="form-control" [(ngModel)]="searchText" (ngModelChange)="querySearch()" placeholder="Search...">
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="20%">Name</th>
+                                    <th width="20%">Email</th>
+                                    <th width="20%">Phone</th>
+                                    <th width="20%">Subject</th>
+                                    <th width="10%">Is Viewed</th>
+                                    <th width="10px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let pd of customerEnquiry | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
+                                    <td width="20%"> {{pd.name}} </td>
+                                    <td width="20%"> {{pd.email}} </td>
+                                    <td width="20%"> {{pd.phone}} </td>
+                                    <td width="20%"> {{pd.subject}} </td>
+                                    <td style="text-align: center;" width="10%" *ngIf="pd.isViewed=='Y'" > ✅ </td>
+                                    <td style="text-align: center;" width="10%" *ngIf="pd.isViewed=='N'"> ❌ </td>
+                                    <td width="10px">
+                                        <a> <i class="fa fa-eye fa-lg text-info"
+                                                (click)="onView(info,'1000',pd.id)"></i></a>
+                                    </td>
+                                    <td width="10px">
+                                        <i class="fa fa-trash fa-lg text-danger" (click)="onDelete(pd.id)"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template #info let-modal>
+            <div class="modal-header">
+                <h5> Edit Is Viewed</h5>
+            </div>
+            <div class="modal-body" style="padding: 20px;">
+        
+                <div class="container">
+                    <div class="row">
+                        <label> Name : </label>
+                        <p>{{customerEnquiryData.name}}</p>
+                        <!-- <h3 style="text-align: center;"><strong></strong></h3> -->
+        
+                    </div>
+                    <div class="row">
+                        <label> Email : </label>
+                        <p>{{customerEnquiryData.email}}</p>
+                        <!-- <h3 style="text-align: center;"><strong></strong></h3> -->
+        
+                    </div>
+                    <div class="row">
+                        <label> Phone : </label>
+                        <p>{{customerEnquiryData.phone}}</p>
+                        <!-- <h3 style="text-align: center;"><strong></strong></h3> -->
+        
+                    </div>
+                    <div class="row">
+                        <label> Subject : </label>
+                        <p>{{customerEnquiryData.subject}}</p>
+                        <!-- <h3 style="text-align: center;"><strong></strong></h3> -->
+        
+                    </div>
+                    <div class="row">
+                        <label> Message : </label>
+                        <p>{{customerEnquiryData.message}}</p>
+                        <!-- <h3 style="text-align: center;"><strong></strong></h3> -->
+        
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" [disabled]="!_is_print" (click)="printInvoice()" class="btn btn-primary">Print Invoice</button> -->
+                <button type="button" class="btn btn-simple" data-dismiss="modal"
+                    (click)="modal.dismiss('Close click')">CLOSE</button>
+            </div>
+        </ng-template>
+    </div>
+</div>

@@ -1,0 +1,273 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <a routerLink="/file/product" style="float: left;margin-bottom: 10px;" class="btn btn-sm btn-warning"><i
+                    class="fa fa-arrow-left"></i> <b>back</b></a>
+
+        </div>
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Add Product</strong>
+                </div>
+                <form [formGroup]="addProductForm" (ngSubmit)="onSubmit()">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="nameOf">Product Name</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="addProductForm.get('nameOf').errors ? 'is-invalid' : 'is-valid' "
+                                        id="nameOf" formControlName="nameOf">
+                                    <div class="valid-feedback"
+                                        *ngIf="addProductForm.get('nameOf').touched && addProductForm.get('nameOf').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-col-form-label" for="mainCategory_id">Main Category</label>
+                                <ngx-select-dropdown
+                                    [ngClass]="addProductForm.get('mainCategory_id').errors ? 'is-invalid' : 'is-valid' "
+                                    (change)="selectionChanged($event)" [multiple]="false"
+                                    formControlName="mainCategory_id" [config]="config"
+                                    [options]="allMainCategory"></ngx-select-dropdown>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-col-form-label" for="subCategory_id">Sub Category</label>
+
+                                <ngx-select-dropdown
+                                    [ngClass]="addProductForm.get('subCategory_id').errors ? 'is-invalid' : 'is-valid' "
+                                    (change)="selectionChanged1($event)" [multiple]="false"
+                                    formControlName="subCategory_id" [config]="config"
+                                    [options]="allsubCategory"></ngx-select-dropdown>
+
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-col-form-label" for="scale_id">Scale</label>
+
+                                <ngx-select-dropdown
+                                    [ngClass]="addProductForm.get('scale_id').errors ? 'is-invalid' : 'is-valid' "
+                                    (change)="selectionChanged2($event)" [multiple]="false" formControlName="scale_id"
+                                    [config]="config" [options]="allscale"></ngx-select-dropdown>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-col-form-label" for="brand_id">Brand</label>
+
+                                <ngx-select-dropdown
+                                    [ngClass]="addProductForm.get('brand_id').errors ? 'is-invalid' : 'is-valid' "
+                                    (change)="selectionChanged3($event)" [multiple]="false" formControlName="brand_id"
+                                    [config]="config" [options]="allbrand"></ngx-select-dropdown>
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="sku">SKU</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="addProductForm.get('sku').errors ? 'is-invalid' : 'is-valid' "
+                                        id="sku" formControlName="sku">
+                                    <div class="valid-feedback"
+                                        *ngIf="addProductForm.get('sku').touched && addProductForm.get('sku').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="sku">Price</label>
+                                    <input type="number" class="form-control"
+                                        [ngClass]="addProductForm.get('price').errors ? 'is-invalid' : 'is-valid' "
+                                        id="price" formControlName="price">
+                                    <div class="valid-feedback"
+                                        *ngIf="addProductForm.get('price').touched && addProductForm.get('price').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="discountRate">Discount Rate (%)</label>
+                                    <input type="number" class="form-control"
+                                        [ngClass]="addProductForm.get('discountRate').errors ? 'is-invalid' : 'is-valid' "
+                                        id="discountRate" formControlName="discountRate">
+                                    <div class="valid-feedback"
+                                        *ngIf="addProductForm.get('discountRate').touched && addProductForm.get('discountRate').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="discountAmount">Discount Amount</label>
+                                    <input type="number" class="form-control"
+                                        [ngClass]="addProductForm.get('discountAmount').errors ? 'is-invalid' : 'is-valid' "
+                                        id="discountAmount" formControlName="discountAmount">
+                                    <div class="valid-feedback"
+                                        *ngIf="addProductForm.get('discountAmount').touched && addProductForm.get('discountAmount').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="vatRate">Vat Rate (%)</label>
+                                    <input type="number" class="form-control"
+                                        [ngClass]="addProductForm.get('vatRate').errors ? 'is-invalid' : 'is-valid' "
+                                        id="vatRate" formControlName="vatRate">
+                                    <div class="valid-feedback"
+                                        *ngIf="addProductForm.get('vatRate').touched && addProductForm.get('vatRate').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="vatAmount">Vat Amount</label>
+                                    <input type="number" class="form-control"
+                                        [ngClass]="addProductForm.get('vatAmount').errors ? 'is-invalid' : 'is-valid' "
+                                        id="vatAmount" formControlName="vatAmount">
+                                    <div class="valid-feedback"
+                                        *ngIf="addProductForm.get('vatAmount').touched && addProductForm.get('vatAmount').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4" style="margin-top:auto;">
+                                <div class="form-check pb-2" style="margin-top:20px;">
+                                    <input class="form-check-input" type="checkbox" value="option1" id="checkbox1"
+                                        formControlName="isActive" (change)="checkValue($event)" [(ngModel)]="checked">
+                                    <label class="form-check-label" for="checkbox1">
+                                        Active
+                                    </label>
+                                    <br>
+                                    <input class="form-check-input" type="checkbox" value="option1" id="checkbox1"
+                                        formControlName="isNew" (change)="checkValueNew($event)"
+                                        [(ngModel)]="checkedNew">
+                                    <label class="form-check-label" for="checkbox1">
+                                        New Arival
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field>
+                                        <mat-label style="padding-left: 10px;">Product Image</mat-label>
+
+                                        <button type="button" mat-icon-button matPrefix (click)="f1_input.click()">
+                                            <mat-icon>attach_file</mat-icon>
+                                        </button>
+                                        <input type="text" readonly matInput [formControl]="product_profile" />
+                                        <input accept="image/png,image/jpeg,image/jpg" type="file" multiple hidden
+                                            #f1_input (change)="handleImage(f1_input.files!, $event)" />
+                                    </mat-form-field>
+                                    <div class="progress" style="margin-top: -10px !important;">
+                                        <div class="progress-bar bg-success" role="progressbar"
+                                            [ngStyle]="{'width':percentage}" aria-valuemin="0" aria-valuemax="100">
+                                        </div>
+
+                                    </div>
+                                    <img style="text-align:right;width: 150px; height:150px;" [src]="productImageSrc">
+
+                                </div>
+
+
+                                <div class="col-md-4">
+                                    <label class="form-col-form-label" for="vatAmount">Other Images</label>
+
+                                    <button type="button" style="float: right;margin-bottom: 5px;"
+                                        class="btn col-12 btn-primary" (click)="f2_input.click()">
+                                        <i class="fa fa-plus  fa-1x text-white"></i> &nbsp; Upload Image
+                                    </button>
+
+                                    <input type="hidden" readonly [formControl]="display_image" />
+                                    <input accept="image/png,image/jpeg,image/jpg" type="file" multiple hidden #f2_input
+                                        formControlName="images" (change)="handleImages(f2_input.files!, $event)" />
+
+                                    <span *ngIf="isSuccess" class="badge badge-success">Successfully Uploaded</span>
+
+                                    <div class="progress" style="margin-top: 10px !important;">
+                                        <div class="progress-bar bg-success" role="progressbar"
+                                            [ngStyle]="{'width':percentage1}" aria-valuemin="0" aria-valuemax="100">
+                                        </div>
+                                    </div>
+
+                                    <ul style="list-style: none;padding:0">
+                                        <li class="add_role" formArrayName="images" style="margin-bottom: 25px;">
+                                            <div class="table-responsive" style="overflow-x: clip;">
+                                                <table style="border: 0px;" class="table mt-3 mb-3" mdbTable>
+
+                                                    <tr [formGroupName]="i"
+                                                        *ngFor="let role of addProductForm.get('images').controls; let i = index">
+                                                        <td >
+                                                            <input style="margin-left: 0px !important;width: 180px;"
+                                                                type="text" formControlName="imgPath"
+                                                                class="form-control form-control2">
+
+                                                        </td>
+                                                        <td>
+                                                            <input id="{{i}}" [(colorPicker)]="color" (colorPickerChange)="onChangeColor($event, i)"
+                                                            formControlName="color" style="width: 80px;"/>
+                                                        </td>
+                                                        <td style="vertical-align: inherit !important; float: left;">
+                                                            <i style="float: right;"
+                                                                class="fa fa-remove  fa-2x text-danger"
+                                                                (click)="onDeleteRowImages(i)"></i>
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-col-form-label" for="description">Product Description</label><br>
+                                        <angular-editor  [ngClass]="addProductForm.get('description').errors ? 'is-invalid' : 'is-valid' "
+                                        id="description" formControlName="description"></angular-editor>
+                                        <!-- <textarea class="form-control"
+                                            [ngClass]="addProductForm.get('description').errors ? 'is-invalid' : 'is-valid' "
+                                            id="description" formControlName="description"  rows="4" cols="5"></textarea> -->
+                                        <div class="valid-feedback"
+                                            *ngIf="addProductForm.get('description').touched && addProductForm.get('description').errors?.required">
+                                            This value is required.
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- <div class="col-md-8">
+                                    <label class="btn btn-default p-0">
+                                        <input type="file" accept="image/*" multiple (change)="selectFiles($event)" />
+                                    </label>
+                                </div>
+                                <br>
+                                <br>
+                                <div>
+                                    <img style="padding-right: 5px;" height="150" width="200" *ngFor='let preview of previews' [src]="preview"
+                                        class="preview">
+                                </div> -->
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer" style="margin-bottom: 10px;">
+                        <button style="float: left;margin-bottom: 10px;" type="submit" class="btn btn-sm btn-success"
+                            [disabled]="!addProductForm.valid"><i class="fa fa-dot-circle-o"></i> <b>Submit</b></button>
+                        <button style="float: right;margin-bottom: 10px;" type="reset" class="btn btn-sm btn-warning"><i
+                                class="fa fa-ban"></i><b>Reset</b> </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

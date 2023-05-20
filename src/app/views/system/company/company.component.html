@@ -1,0 +1,198 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="animated fadeIn">
+    <div class="row">
+      
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Add Company</strong>
+                </div>
+                <form [formGroup]="addCompanyForm" (ngSubmit)="onSubmit()">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="nameOf">Company Name</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="addCompanyForm.get('nameOf').errors ? 'is-invalid' : 'is-valid' "
+                                        id="nameOf" formControlName="nameOf">
+                                    <div class="valid-feedback"
+                                        *ngIf="addCompanyForm.get('nameOf').touched && addCompanyForm.get('nameOf').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="email">Email</label>
+                                    <input type="email" class="form-control"
+                                        [ngClass]="addCompanyForm.get('email').errors ? 'is-invalid' : 'is-valid' "
+                                        id="email" formControlName="email">
+                                    <div class="valid-feedback"
+                                        *ngIf="addCompanyForm.get('email').touched && addCompanyForm.get('email').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="add1">Address 1</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="addCompanyForm.get('add1').errors ? 'is-invalid' : 'is-valid' "
+                                        id="add1" formControlName="add1">
+                                    <div class="valid-feedback"
+                                        *ngIf="addCompanyForm.get('add1').touched && addCompanyForm.get('add1').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="add2">Address 2</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="addCompanyForm.get('add2').errors ? 'is-invalid' : 'is-valid' "
+                                        id="add2" formControlName="add2">
+                                    <div class="valid-feedback"
+                                        *ngIf="addCompanyForm.get('add2').touched && addCompanyForm.get('add2').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="city">City</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="addCompanyForm.get('city').errors ? 'is-invalid' : 'is-valid' "
+                                        id="city" formControlName="city">
+                                    <div class="valid-feedback"
+                                        *ngIf="addCompanyForm.get('city').touched && addCompanyForm.get('city').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="state">State</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="addCompanyForm.get('state').errors ? 'is-invalid' : 'is-valid' "
+                                        id="state" formControlName="state">
+                                    <div class="valid-feedback"
+                                        *ngIf="addCompanyForm.get('state').touched && addCompanyForm.get('state').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="zipcode">Zip Code</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="addCompanyForm.get('zipcode').errors ? 'is-invalid' : 'is-valid' "
+                                        id="zipcode" formControlName="zipcode">
+                                    <div class="valid-feedback"
+                                        *ngIf="addCompanyForm.get('zipcode').touched && addCompanyForm.get('zipcode').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="tel1">Telephone 1</label>
+                                    <input type="number" class="form-control"
+                                        [ngClass]="addCompanyForm.get('tel1').errors ? 'is-invalid' : 'is-valid' "
+                                        id="tel1" formControlName="tel1">
+                                    <div class="valid-feedback"
+                                        *ngIf="addCompanyForm.get('tel1').touched && addCompanyForm.get('tel1').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="tel1">Telephone 2</label>
+                                    <input type="number" class="form-control"
+                                        [ngClass]="addCompanyForm.get('tel2').errors ? 'is-invalid' : 'is-valid' "
+                                        id="tel2" formControlName="tel2">
+                                    <div class="valid-feedback"
+                                        *ngIf="addCompanyForm.get('tel2').touched && addCompanyForm.get('tel2').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="tel3">Telephone 3</label>
+                                    <input type="number" class="form-control"
+                                        [ngClass]="addCompanyForm.get('tel3').errors ? 'is-invalid' : 'is-valid' "
+                                        id="tel3" formControlName="tel3">
+                                    <div class="valid-feedback"
+                                        *ngIf="addCompanyForm.get('tel3').touched && addCompanyForm.get('tel3').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="message">Message </label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="addCompanyForm.get('message').errors ? 'is-invalid' : 'is-valid' "
+                                        id="message" formControlName="message">
+                                    <div class="valid-feedback"
+                                        *ngIf="addCompanyForm.get('message').touched && addCompanyForm.get('message').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top:auto;">
+                                <div class="form-check pb-2">
+                                    <input class="form-check-input" type="checkbox" value="option1" id="checkbox1"
+                                        formControlName="isActive" (change)="checkValue($event)" [(ngModel)]="checked">
+                                    <label class="form-check-label" for="checkbox1">
+                                        Active
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <br>
+                            <br>
+                            <div class="col-md-4">
+
+                                <mat-form-field>
+                                    <mat-label style="padding-left: 10px;">Company Logo</mat-label>
+
+                                    <button type="button" mat-icon-button matPrefix (click)="f1_input.click()">
+                                        <mat-icon>attach_file</mat-icon>
+                                    </button>
+                                    <input type="text" readonly matInput [formControl]="company_profile" />
+                                    <input accept="image/png,image/jpeg,image/jpg" type="file" multiple hidden #f1_input
+                                        (change)="handleImage(f1_input.files!, $event)" />
+                                </mat-form-field>
+                                <div class="progress" style="margin-top: -10px !important;">
+                                    <div class="progress-bar bg-success" role="progressbar"
+                                        [ngStyle]="{'width':percentage}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <img style="width: 150px; height:150px;" [src]="companyImageSrc">
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="card-footer" style="margin-bottom: 10px;">
+                        <button style="float: left;margin-bottom: 10px;" type="submit" class="btn btn-sm btn-success"
+                            [disabled]="!addCompanyForm.valid"><i class="fa fa-dot-circle-o"></i> <b>Submit</b></button>
+                        <button style="float: right;margin-bottom: 10px;" type="reset" class="btn btn-sm btn-warning"><i
+                                class="fa fa-ban"></i><b>Reset</b> </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

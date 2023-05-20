@@ -1,0 +1,59 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <a routerLink="/file/add-product" style="float: right;margin-bottom: 10px;"  class="btn btn-sm btn-success" ><i class="fa fa-plus"></i> <b>Add Product</b></a>
+
+        </div>
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Product</strong> List
+                </div>
+                <div class="card-body">
+                    <div class="header">
+                        <input class="form-control" [(ngModel)]="searchText" (ngModelChange)="querySearch()" placeholder="Search...">
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="10%">Image</th>
+                                    <th width="30%">Product Name</th>
+                                    <th width="20%">Main Category</th>
+                                    <th width="20%">Sub Category</th>
+                                    <th style="text-align: right ;" width="10%">Price</th>
+                                    <th style="text-align: center;" width="10%">Active</th>
+
+                                    <th width="10px"></th>
+                                    <th width="10px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let pd of allProduct | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
+                                    <td width="10%"> <img src="{{serverImgPath}}{{pd.imgPath}}" style="height: 50px; width:50px;" ></td>
+                                    <td width="30%"> {{pd.nameOf}} </td>
+                                    <td width="20%"> {{pd.mainCategory}} </td>
+                                    <td width="20%"> {{pd.subCategory}} </td>
+                                    <td style="text-align: right ;" width="10%"> {{pd.price}} </td>
+
+
+                                    <td style="text-align: center;" width="10%" *ngIf="pd.isActive=='Y'"> ✅ </td>
+                                    <td style="text-align: center;" width="10%" *ngIf="pd.isActive=='N'"> ❌ </td>
+                                    <td width="10px">
+                                       <a routerLink="/file/edit-product/{{pd.code}}"> <i class="fa fa-edit fa-lg text-success" ></i></a>
+                                    </td>
+                                    <td width="10px">
+                                        <i class="fa fa-trash fa-lg text-danger" (click)="onDelete(pd.custId)"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

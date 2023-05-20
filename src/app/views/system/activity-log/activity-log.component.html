@@ -1,0 +1,70 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="animated fadeIn">
+    <div class="row">
+
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Activity Log</strong> List
+                </div>
+                <div class="card-body">
+                    <div class="header">
+                        <input class="form-control" [(ngModel)]="searchText" (ngModelChange)="querySearch()" placeholder="Search...">
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="20%">Log Name</th>
+                                    <th width="30%">Description</th>
+                                    <th width="20%">Subject</th>
+                                    <th width="20%">Edited By</th>
+                                    <th width="10px"></th>
+                                    <th width="10px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let pd of activityLog | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
+                                    <td width="10%"> {{pd.log_name}} </td>
+                                    <td width="35%"> {{pd.description}} </td>
+                                    <td width="25%"> {{pd.subject_type.split('/').pop()}} </td>
+                                    <td width="30%"> {{pd.name}} </td>
+                                    <td width="10px">
+                                        <a> <i class="fa fa-eye fa-lg text-info"
+                                                (click)="onView(info,'1000',pd.id)"></i></a>
+                                    </td>
+                                    <td width="10px">
+                                        <i class="fa fa-trash fa-lg text-danger" (click)="onDelete(pd.id)"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #info let-modal>
+    <div class="modal-header">
+        <h5> Activity Log Details</h5>
+    </div>
+    <div class="modal-body" style="padding: 20px;">
+
+        <div class="container">
+            <div class="row">
+                <!-- <h3 style="text-align: center;"><strong></strong></h3> -->
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <!-- <button type="button" [disabled]="!_is_print" (click)="printInvoice()" class="btn btn-primary">Print Invoice</button> -->
+        <button type="button" class="btn btn-simple" data-dismiss="modal"
+            (click)="modal.dismiss('Close click')">CLOSE</button>
+    </div>
+</ng-template>

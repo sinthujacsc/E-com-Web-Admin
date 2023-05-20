@@ -1,0 +1,205 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <a routerLink="/customer/order" style="float: left;margin-bottom: 10px;" class="btn btn-sm btn-warning"><i
+                    class="fa fa-arrow-left"></i> <b>back</b></a>
+
+        </div>
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Edit Order</strong>
+                </div>
+                <form [formGroup]="editOrderForm" (ngSubmit)="onSubmit()">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="mobileNum">Mobile Number</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="editOrderForm.get('mobileNum').errors ? 'is-invalid' : 'is-valid' "
+                                        id="mobileNum" formControlName="mobileNum">
+                                    <div class="valid-feedback"
+                                        *ngIf="editOrderForm.get('mobileNum').touched && editOrderForm.get('mobileNum').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="billingAdd1">Billing Address 1</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="editOrderForm.get('billingAdd1').errors ? 'is-invalid' : 'is-valid' "
+                                        id="billingAdd1" formControlName="billingAdd1">
+                                    <div class="valid-feedback"
+                                        *ngIf="editOrderForm.get('billingAdd1').touched && editOrderForm.get('billingAdd1').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="billingAdd2">Billing Address 2</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="editOrderForm.get('billingAdd2').errors ? 'is-invalid' : 'is-valid' "
+                                        id="billingAdd2" formControlName="billingAdd2">
+                                    <div class="valid-feedback"
+                                        *ngIf="editOrderForm.get('billingAdd2').touched && editOrderForm.get('billingAdd2').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="billingCity">Billing City</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="editOrderForm.get('billingCity').errors ? 'is-invalid' : 'is-valid' "
+                                        id="billingCity" formControlName="billingCity">
+                                    <div class="valid-feedback"
+                                        *ngIf="editOrderForm.get('billingCity').touched && editOrderForm.get('billingCity').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="billingPostcode">Billing PostCode</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="editOrderForm.get('billingPostcode').errors ? 'is-invalid' : 'is-valid' "
+                                        id="billingPostcode" formControlName="billingPostcode">
+                                    <div class="valid-feedback"
+                                        *ngIf="editOrderForm.get('billingPostcode').touched && editOrderForm.get('billingPostcode').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="billingCountry">Billing Country</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="editOrderForm.get('billingCountry').errors ? 'is-invalid' : 'is-valid' "
+                                        id="billingCountry" formControlName="billingCountry">
+                                    <div class="valid-feedback"
+                                        *ngIf="editOrderForm.get('billingCountry').touched && editOrderForm.get('billingCountry').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="shippingAdd1">Shipping Address 1</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="editOrderForm.get('shippingAdd1').errors ? 'is-invalid' : 'is-valid' "
+                                        id="shippingAdd1" formControlName="shippingAdd1">
+                                    <div class="valid-feedback"
+                                        *ngIf="editOrderForm.get('shippingAdd1').touched && editOrderForm.get('shippingAdd1').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="shippingAdd2">Shipping Address 2</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="editOrderForm.get('shippingAdd2').errors ? 'is-invalid' : 'is-valid' "
+                                        id="shippingAdd2" formControlName="shippingAdd2">
+                                    <div class="valid-feedback"
+                                        *ngIf="editOrderForm.get('shippingAdd2').touched && editOrderForm.get('shippingAdd2').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="shippingCity">Shipping City</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="editOrderForm.get('shippingCity').errors ? 'is-invalid' : 'is-valid' "
+                                        id="shippingCity" formControlName="shippingCity">
+                                    <div class="valid-feedback"
+                                        *ngIf="editOrderForm.get('shippingCity').touched && editOrderForm.get('shippingCity').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="shippingPostcode">Shipping PostCode</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="editOrderForm.get('shippingPostcode').errors ? 'is-invalid' : 'is-valid' "
+                                        id="shippingPostcode" formControlName="shippingPostcode">
+                                    <div class="valid-feedback"
+                                        *ngIf="editOrderForm.get('shippingPostcode').touched && editOrderForm.get('shippingPostcode').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="shippingCountry">Shipping Country</label>
+                                    <input type="text" class="form-control"
+                                        [ngClass]="editOrderForm.get('shippingCountry').errors ? 'is-invalid' : 'is-valid' "
+                                        id="shippingCountry" formControlName="shippingCountry">
+                                    <div class="valid-feedback"
+                                        *ngIf="editOrderForm.get('shippingCountry').touched && editOrderForm.get('shippingCountry').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="status">Status</label>
+                                    <select id="combobox"
+                                        [ngClass]="editOrderForm.get('status').errors ? 'is-invalid' : 'is-valid' "
+                                        class="form-control" data-live-search="true" formControlName="status">
+                                        <option selected disabled>Select Status..</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="processing">Processing</option>
+                                        <option value="delivered">Delivered</option>
+                                        <option value="canceled">Canceled</option>
+                                    </select>                                    
+                                    <div class="valid-feedback"
+                                        *ngIf="editOrderForm.get('status').touched && editOrderForm.get('status').errors?.required">
+                                        This value is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-col-form-label" for="paymentStatus">Payment Status</label>
+                                <select id="combobox"
+                                    [ngClass]="editOrderForm.get('paymentStatus').errors ? 'is-invalid' : 'is-valid' "
+                                    class="form-control" data-live-search="true" formControlName="paymentStatus">
+                                    <option selected disabled>Select Payment Status..</option>
+                                    <option value="paid">paid</option>
+                                    <option value="cod">cod</option>
+                                </select>                                    
+                                <div class="valid-feedback"
+                                    *ngIf="editOrderForm.get('paymentStatus').touched && editOrderForm.get('paymentStatus').errors?.required">
+                                    This value is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer" style="margin-bottom: 10px;">
+                        <button style="float: left;margin-bottom: 10px;" type="submit" class="btn btn-sm btn-success"
+                            [disabled]="!editOrderForm.valid"><i class="fa fa-dot-circle-o"></i> <b>Submit</b></button>
+                        <button style="float: right;margin-bottom: 10px;" type="reset" class="btn btn-sm btn-warning"><i
+                                class="fa fa-ban"></i><b>Reset</b> </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

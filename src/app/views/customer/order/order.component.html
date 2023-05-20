@@ -1,0 +1,101 @@
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+            <div class="animated fadeIn">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Order</strong> List
+                            </div>
+                            <div class="card-body">
+                                <div class="header">
+                                    <input class="form-control" [(ngModel)]="searchText" (ngModelChange)="querySearch()" placeholder="Search...">
+                                </div>
+                                <div class="body table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="10%">Bill No</th>
+                                                <th width="20%">Name</th>
+                                                <th width="20%">Email</th>
+                                                <th width="15%">Mobile Num</th>
+                                                <th width="15%">Billing Add</th>                                                
+                                                <th width="15%">Shipping Add</th>
+                                                <th width="15%">Status</th>
+                                                <th width="15%">Payment Status</th>
+
+                                                <th width="10%">Total</th>
+
+                                                <th width="10px"></th>
+                                                <th width="10px"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let pd of allOrder | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
+                                                <td width="10%"> {{pd.billNo}} </td>
+                                                <td width="20%"> {{pd.firstName}} {{pd.lastName}} </td>
+                                                <td width="20%"> {{pd.email}} </td>
+                                                <td width="15%"> {{pd.mobileNum}} </td>
+                                                <td width="15%"> {{pd.billingAdd1}}, {{pd.billingAdd2}},<br> {{pd.billingCity}}, {{pd.billingCountry}} </td>
+                                                <td width="15%"> {{pd.shippingAdd1}}, {{pd.shippingAdd2}},<br> {{pd.shippingCity}}, {{pd.shippingCountry}} </td>
+                                                <td width="15%"> {{pd.status}} </td>
+                                                <td width="15%"> {{pd.paymentStatus}} </td>
+
+                                                <td width="15%"> £{{pd.totalPaid | currency:' '}} </td>
+
+
+                                               
+                                                <td width="10px">
+                                                <a routerLink="/customer/edit-order/{{pd.billId}}"> <i class="fa fa-edit fa-lg text-success" ></i></a>
+                                                </td>
+                                                <td width="10px">
+                                                    <a> <i class="fa fa-eye fa-lg text-info"
+                                                            (click)="onView(info,'1000',pd.billId)"></i></a>
+                                                </td>
+                                                <td width="10px">
+                                                    <i class="fa fa-trash fa-lg text-danger" (click)="onDelete(pd.billId)"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-template #info let-modal>
+                <div class="modal-header">
+                    <h5>View Products</h5>
+                </div>
+                <div class="modal-body" style="padding: 20px;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th width="10%">Image</th>
+                                <th width="30%">Product Name</th>
+                                <th width="20%">Quantity</th>
+                                <th width="20%">Price</th>
+                                <th width="20%">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let product of allProducts.saleDetails">
+                                <td width="10%"> <img src="{{serverImgPath}}{{product.product.imgPath}}" style="height: 50px; width:50px;" ></td>
+                                <td width="30%"> {{ product.product.nameOf }} </td>
+                                <td width="20%"> {{ product.SQty }} </td>
+                                <td width="20%">{{ product.product.price }}</td>
+                                <td width="20%">{{ product.totalAmount }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                      
+                </div>
+               
+                <div class="modal-footer">
+                    <!-- <button type="button" [disabled]="!_is_print" (click)="printInvoice()" class="btn btn-primary">Print Invoice</button> -->
+                    <button type="button" class="btn btn-simple" data-dismiss="modal"
+                        (click)="modal.dismiss('Close click')">CLOSE</button>
+                </div>
+            </ng-template>
