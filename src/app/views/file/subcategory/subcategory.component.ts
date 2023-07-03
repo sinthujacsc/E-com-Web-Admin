@@ -25,7 +25,7 @@ export class SubcategoryComponent implements OnInit {
 
   subCategory_profile: FormControl = new FormControl("");
   percentage: string = '0%';
-
+  loadedImage:boolean=false;
   dataSaved = false;
   subCategoryIdToUpdate = null;
   searchTerm: any = { nameOf: '' };
@@ -47,7 +47,16 @@ export class SubcategoryComponent implements OnInit {
     });
     this.loadAllsubCategory();
   }
+  removeImage(){
+    this.subCategoryImageSrc="./assets/images/noImage.jpg";
 
+  }
+  removeImage1(){
+    this.loadedImage=false;
+    this.subCategory_profile.patchValue("");
+    this.subCategoryImageSrc="./assets/images/noImage.jpg";
+
+  }
   onSubmit() {
     this.dataSaved = false;
     this.saveOrUpdate();
@@ -96,7 +105,7 @@ export class SubcategoryComponent implements OnInit {
         this.percentage = Math.round(100 * event.loaded / event.total) + '%';
       } else if (event instanceof HttpResponse) {
         console.log('File uploaded successfully!' + JSON.stringify(event));
-
+        this.loadedImage=true;
         this.subCategory_image = null;
         this.percentage = Math.round(100 * 0) + '%';
       }
@@ -115,6 +124,8 @@ export class SubcategoryComponent implements OnInit {
     this.service.GetById('filter-subcategory',this.searchText).subscribe(
       (success: any) => {
         this.allsubCategory= success;
+        this.p = 1; // Reset pagination to the first page
+
       },
       error => {
         this.toastr.error('Error while fetching data!', 'Error.');
@@ -178,6 +189,8 @@ export class SubcategoryComponent implements OnInit {
       });
   }
   onDelete(id: any) {
+    const confirmed = window.confirm('Are you sure you want to delete this customer enquiry?');
+    if(confirmed){
     this.service.Delete('sub-category', id).subscribe(
       () => {
         // success
@@ -191,6 +204,7 @@ export class SubcategoryComponent implements OnInit {
         this.toastr.error('Error while fetching data!', 'Eroor');
       }
     );
+    }
   }
   onEdit(id: any) {
     this.service.GetById('sub-category', id).subscribe(

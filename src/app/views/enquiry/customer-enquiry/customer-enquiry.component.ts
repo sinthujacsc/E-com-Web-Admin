@@ -32,10 +32,12 @@ export class CustomerEnquiryComponent implements OnInit {
   }
 
   onDelete(id: any) {
+    const confirmed = window.confirm('Are you sure you want to delete this customer enquiry?');
+    if (confirmed) {
     this.service.Delete('customer-enquiry', id).subscribe(
       () => {
         // success
-
+        
         this.toastr.success('Customer Enquiry Deleted!', 'Ok!');
         this.loadAllCustomerEnquiry();
       },
@@ -44,6 +46,7 @@ export class CustomerEnquiryComponent implements OnInit {
       }
     );
   }
+}
 
   onView(content:any,size:any,id:any){
     this.service.GetById('customer-enquiry', id).subscribe(

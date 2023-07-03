@@ -64,6 +64,8 @@ export class ShippingTypeComponent implements OnInit {
     this.service.GetById('filter-shipping-type',this.searchText).subscribe(
       (success: any) => {
         this.allshippingType= success;
+        this.p = 1; // Reset pagination to the first page
+
       },
       error => {
         this.toastr.error('Error while fetching data!', 'Error.');
@@ -128,6 +130,8 @@ export class ShippingTypeComponent implements OnInit {
       });
   }
   onDelete(id: any) {
+    const confirmed = window.confirm('Are you sure you want to delete this customer enquiry?');
+    if(confirmed){
     this.service.Delete('shipping-type', id).subscribe(
       () => {
         // success
@@ -141,6 +145,7 @@ export class ShippingTypeComponent implements OnInit {
         this.toastr.error('Error while fetching data!', 'Eroor');
       }
     );
+    }
   }
   onEdit(id: any) {
     this.service.GetById('shipping-type', id).subscribe(

@@ -20,7 +20,7 @@
                                     <th width="30%">Description</th>
                                     <th width="20%">Subject</th>
                                     <th width="20%">Edited By</th>
-                                    <th width="10px"></th>
+                                    <!-- <th width="10px"></th> -->
                                     <th width="10px"></th>
                                 </tr>
                             </thead>
@@ -31,10 +31,10 @@
                                     <td width="35%"> {{pd.description}} </td>
                                     <td width="25%"> {{pd.subject_type.split('/').pop()}} </td>
                                     <td width="30%"> {{pd.name}} </td>
-                                    <td width="10px">
+                                    <!-- <td width="10px">
                                         <a> <i class="fa fa-eye fa-lg text-info"
                                                 (click)="onView(info,'1000',pd.id)"></i></a>
-                                    </td>
+                                    </td> -->
                                     <td width="10px">
                                         <i class="fa fa-trash fa-lg text-danger" (click)="onDelete(pd.id)"></i>
                                     </td>

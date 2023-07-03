@@ -114,6 +114,8 @@ export class FaqCategoryComponent implements OnInit {
     this.service.GetById('filter-faq-category',this.searchText).subscribe(
       (success: any) => {
         this.allfaqCategory= success;
+        this.p = 1; // Reset pagination to the first page
+
       },
       error => {
         this.toastr.error('Error while fetching data!', 'Error.');
@@ -123,6 +125,8 @@ export class FaqCategoryComponent implements OnInit {
     }
   }
   onDelete(id: any) {
+    const confirmed = window.confirm('Are you sure you want to delete this customer enquiry?');
+    if(confirmed){
     this.service.Delete('faq-category', id).subscribe(
       () => {
         // success
@@ -136,6 +140,7 @@ export class FaqCategoryComponent implements OnInit {
         this.toastr.error('Error while fetching data!', 'Eroor');
       }
     );
+    }
   }
   onEdit(id: any) {
     this.service.GetById('faq-category', id).subscribe(

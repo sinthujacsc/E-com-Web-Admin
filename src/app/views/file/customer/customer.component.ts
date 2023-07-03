@@ -32,6 +32,7 @@ export class CustomerComponent implements OnInit {
     this.service.GetById('filter-customer',this.searchText).subscribe(
       (success: any) => {
         this.allCustomer= success;
+        this.p = 1; // Reset pagination to the first page
       },
       error => {
         this.toastr.error('Error while fetching data!', 'Error.');
@@ -51,6 +52,8 @@ export class CustomerComponent implements OnInit {
       });
   }
   onDelete(id: any) {
+    const confirmed = window.confirm('Are you sure you want to delete this customer enquiry?');
+    if(confirmed){
     this.service.Delete('customer', id).subscribe(
       () => {
         // success
@@ -64,6 +67,7 @@ export class CustomerComponent implements OnInit {
       }
     );
   }
+}
   onEdit(id: any) {
 
   }

@@ -1,7 +1,7 @@
 <div class="fade-in">
   <c-row ngPreserveWhitespaces>
     <c-col xs="12">
-      <app-docs-callout href="components/breadcrumb" name="Breadcrumb"></app-docs-callout>
+      <app-docs-callout  name="Breadcrumb"></app-docs-callout>
     </c-col>
     <c-col class="mb-4" xs="12">
       <c-card>
@@ -22,11 +22,11 @@
             </a>
             .
           </p>
-          <app-docs-example href="components/breadcrumb">
+          <app-docs-example >
             <c-breadcrumb class="mb-2">
               <c-breadcrumb-item *ngFor="let item of items; index as i; last as isLast"
                                  [active]="isLast"
-                                 [url]="item.url">
+                                 >
                 {{item.label}}
               </c-breadcrumb-item>
             </c-breadcrumb>
@@ -34,34 +34,34 @@
             <c-breadcrumb class="mb-2">
               <c-breadcrumb-item *ngFor="let item of items.slice(0,1); index as i; last as isLast"
                                  [active]="isLast"
-                                 [url]="item.url">
+                                 >
                 {{item.label}}
               </c-breadcrumb-item>
             </c-breadcrumb>
             <c-breadcrumb class="mb-2">
               <c-breadcrumb-item *ngFor="let item of items.slice(0,2); index as i; last as isLast"
                                  [active]="isLast"
-                                 [url]="item.url">
+                                >
                 {{item.label}}
               </c-breadcrumb-item>
             </c-breadcrumb>
             <c-breadcrumb class="mb-2">
               <c-breadcrumb-item *ngFor="let item of items.slice(0,3); index as i; last as isLast"
                                  [active]="isLast"
-                                 [url]="item.url">
+                                 >
                 {{item.label}}
               </c-breadcrumb-item>
             </c-breadcrumb>
             <c-breadcrumb class="mb-2">
               <c-breadcrumb-item *ngFor="let item of items.slice(0,4); index as i; last as isLast"
                                  [active]="isLast"
-                                 [url]="item.url">
+                                 >
                 <span [ngClass]="{'mark': isLast}">{{item.label}}</span>
               </c-breadcrumb-item>
             </c-breadcrumb>
             <hr>
             <c-breadcrumb class="mb-0">
-              <c-breadcrumb-item url="/">
+              <c-breadcrumb-item >
                 Home
               </c-breadcrumb-item>
               <c-breadcrumb-item url="/">
@@ -84,7 +84,7 @@
           <strong>Angular Breadcrumbs</strong> <small>router</small>
         </c-card-header>
         <c-card-body>
-          <app-docs-example href="components/breadcrumb#router">
+          <app-docs-example >
             <c-breadcrumb-router></c-breadcrumb-router>
             <c-breadcrumb-router [items]="items"></c-breadcrumb-router>
           </app-docs-example>

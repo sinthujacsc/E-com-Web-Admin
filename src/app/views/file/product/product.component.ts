@@ -32,6 +32,8 @@ export class ProductComponent implements OnInit {
     this.service.GetById('filter-product',this.searchText).subscribe(
       (success: any) => {
         this.allProduct= success;
+        this.p = 1; // Reset pagination to the first page
+
       },
       error => {
         this.toastr.error('Error while fetching data!', 'Error.');
@@ -54,6 +56,8 @@ export class ProductComponent implements OnInit {
       });
   }
   onDelete(id: any) {
+    const confirmed = window.confirm('Are you sure you want to delete this customer enquiry?');
+    if(confirmed){
     this.service.Delete('product', id).subscribe(
       () => {
         // success
@@ -66,6 +70,7 @@ export class ProductComponent implements OnInit {
         this.toastr.error('Error while fetching data!', 'Eroor');
       }
     );
+    }
   }
   onEdit(id: any) {
 

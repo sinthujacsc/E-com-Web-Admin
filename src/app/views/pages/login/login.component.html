@@ -18,11 +18,18 @@
                   <span cInputGroupText>
                     <svg cIcon name="cilLockLocked"></svg>
                   </span>
-                  <input
+                  <input *ngIf="isView"
                     autoComplete="current-password"
                     cFormControl
-                    type="password" #password="ngModel" name="password" [(ngModel)]="formModel.password" placeholder="Password"
+                    type="text" #password="ngModel" name="password" [(ngModel)]="formModel.password" placeholder="Password"
                   />
+                  <input *ngIf="!isView"
+                  autoComplete="current-password"
+                  cFormControl
+                  type="password" #password="ngModel" name="password" [(ngModel)]="formModel.password" placeholder="Password"
+                /> <span cInputGroupText>
+                    <i (click)="isViewed()" class="fa fa-eye fa-lg text-info"></i>
+                  </span>
                 </c-input-group>
                 <c-row>
                   <c-col xs="6">

@@ -18,6 +18,7 @@ export class MaincategoryComponent implements OnInit {
   allMainCategory: any;
   isChecked: string = 'Y';
   checked: boolean = true;
+  loadedImage:boolean=false;
 
   file_store_mainCategory!: FileList;
   mainCategory_image: any;
@@ -47,7 +48,16 @@ export class MaincategoryComponent implements OnInit {
     });
     this.loadAllMainCategory();
   }
+  removeImage(){
+    this.mainCategoryImageSrc="./assets/images/noImage.jpg";
 
+    // alert('');
+  }
+  removeImage1(){
+    this.loadedImage=false;
+    this.mainCategory_profile.patchValue("");
+    this.mainCategoryImageSrc="./assets/images/noImage.jpg";
+  }
   onSubmit() {
     this.dataSaved = false;
     this.saveOrUpdate();
@@ -96,7 +106,7 @@ export class MaincategoryComponent implements OnInit {
         this.percentage = Math.round(100 * event.loaded / event.total) + '%';
       } else if (event instanceof HttpResponse) {
         console.log('File uploaded successfully!' + JSON.stringify(event));
-
+        this.loadedImage=true;
         this.mainCategory_image = null;
         this.percentage = Math.round(100 * 0) + '%';
       }
@@ -149,6 +159,7 @@ export class MaincategoryComponent implements OnInit {
           this.loadAllMainCategory();
           this.mainCategoryIdToUpdate = null;
           this.clearLocal();
+
         },
         err => {
           this.toastr.error('Error while fetching data!', 'Error');
@@ -169,6 +180,8 @@ export class MaincategoryComponent implements OnInit {
       });
   }
   onDelete(id: any) {
+    const confirmed = window.confirm('Are you sure you want to delete this customer enquiry?');
+    if(confirmed){
     this.service.Delete('major-category', id).subscribe(
       () => {
         // success
@@ -183,6 +196,7 @@ export class MaincategoryComponent implements OnInit {
       }
     );
   }
+}
   onEdit(id: any) {
     this.service.GetById('major-category', id).subscribe(
       (item: any) => {
@@ -210,19 +224,24 @@ export class MaincategoryComponent implements OnInit {
     );
   }
   querySearch() {
-    this.searchText=this.searchText?this.searchText:null;
-    if(this.searchText != null){
-    this.service.GetById('filter-maincategory',this.searchText).subscribe(
-      (success: any) => {
-        this.allMainCategory= success;
-      },
-      error => {
-        this.toastr.error('Error while fetching data!', 'Error.');
-      });
-    }else{
+    this.searchText = this.searchText ? this.searchText : null;
+    if (this.searchText !== null) {
+      this.service
+        .GetById('filter-maincategory', this.searchText)
+        .subscribe(
+          (success: any) => {
+            this.allMainCategory = success;
+            this.p = 1; // Reset pagination to the first page
+          },
+          error => {
+            this.toastr.error('Error while fetching data!', 'Error.');
+          }
+        );
+    } else {
       this.loadAllMainCategory();
     }
   }
+  
   clearLocal() {
     this.mainCategory_profile.patchValue(null);
     this.mainCategoryForm.reset();

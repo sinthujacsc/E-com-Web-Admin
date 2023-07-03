@@ -34,6 +34,8 @@ export class ActivityLogComponent implements OnInit {
   }
 
   onDelete(id: any) {
+    const confirmed = window.confirm('Are you sure you want to delete this customer enquiry?');
+    if(confirmed){
     this.service.Delete('activity-log', id).subscribe(
       () => {
         // success
@@ -45,6 +47,7 @@ export class ActivityLogComponent implements OnInit {
         this.toastr.error('Error while fetching data!', 'Eroor');
       }
     );
+    }
   }
   onView(content:any,size:any,id:any){
     this.service.GetById('activity-log', id).subscribe(
@@ -64,6 +67,8 @@ export class ActivityLogComponent implements OnInit {
     this.service.GetById('filter-activity',this.searchText).subscribe(
       (success: any) => {
         this.activityLog= success;
+        this.p = 1; // Reset pagination to the first page
+
       },
       error => {
         this.toastr.error('Error while fetching data!', 'Error.');

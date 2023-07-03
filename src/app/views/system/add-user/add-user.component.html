@@ -37,9 +37,18 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-col-form-label" for="password">Password</label>
-                                    <input type="password" class="form-control"
-                                        [ngClass]="addUserForm.get('password').errors ? 'is-invalid' : 'is-valid' "
-                                        id="password" formControlName="password">
+                                    <div class="icon-input">
+                                        <input *ngIf="isView" type="text" class="form-control"
+                                            [ngClass]="addUserForm.get('password').errors ? 'is-invalid' : 'is-valid' "
+                                            id="password" formControlName="password">
+                                        <input *ngIf="!isView" type="password" class="form-control"
+                                            [ngClass]="addUserForm.get('password').errors ? 'is-invalid' : 'is-valid' "
+                                            id="password" formControlName="password">
+
+                                        <span class="eye-icon">
+                                            <i (click)="isViewed()" class="fa fa-eye"></i>
+                                        </span>
+                                    </div>
                                     <div class="valid-feedback"
                                         *ngIf="addUserForm.get('password').touched && addUserForm.get('password').errors?.required">
                                         This value is required.
@@ -48,13 +57,19 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="form-col-form-label" for="password_confirmation">Confirm Password</label>
-                                    <input type="password" class="form-control"
-                                        [ngClass]="addUserForm.get('password_confirmation').errors ? 'is-invalid' : 'is-valid' "
-                                        id="password_confirmation" formControlName="password_confirmation">
-                                    <div class="valid-feedback"
-                                        *ngIf="addUserForm.get('password_confirmation').touched && addUserForm.get('password_confirmation').errors?.required">
-                                        This value is required.
+                                    <label class="form-col-form-label" for="password_confirmation">Confirm
+                                        Password</label>
+                                    <div class="icon-input">
+                                        <input *ngIf="isView1" type="text" class="form-control"
+                                            [ngClass]="addUserForm.get('password_confirmation').errors ? 'is-invalid' : 'is-valid' "
+                                            id="password_confirmation" formControlName="password_confirmation">
+                                        <input *ngIf="!isView1" type="password" class="form-control"
+                                            [ngClass]="addUserForm.get('password_confirmation').errors ? 'is-invalid' : 'is-valid' "
+                                            id="password_confirmation" formControlName="password_confirmation">
+
+                                        <span class="eye-icon">
+                                            <i (click)="isViewed1()" class="fa fa-eye"></i>
+                                        </span>
                                     </div>
                                     <div class="valid-feedback"
                                         *ngIf="addUserForm.get('password_confirmation').touched && addUserForm.get('password_confirmation').hasError('unmatch')">
@@ -95,7 +110,18 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <img style="width: 150px; height:150px;" [src]="userImageSrc">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <img style="width: 150px; height:150px;" [src]="userImageSrc">
+
+                                    </div>
+                                    <div *ngIf="loadImage" class="col-md-2">
+                                        <a class="btn btn-primary" (click)="removeImage1()">X</a>
+                                    </div>
+                                </div>
+
+
+
                             </div>
 
 
@@ -106,8 +132,8 @@
                     <div class="card-footer" style="margin-bottom: 10px;">
                         <button style="float: left;margin-bottom: 10px;" type="submit" class="btn btn-sm btn-success"
                             [disabled]="!addUserForm.valid"><i class="fa fa-dot-circle-o"></i> <b>Submit</b></button>
-                        <button style="float: right;margin-bottom: 10px;" type="reset" class="btn btn-sm btn-warning"><i
-                                class="fa fa-ban"></i><b>Reset</b> </button>
+                        <button style="float: right;margin-bottom: 10px;" (click)="removeImage()" type="reset"
+                            class="btn btn-sm btn-warning"><i class="fa fa-ban"></i><b>Reset</b> </button>
                     </div>
                 </form>
             </div>
@@ -120,7 +146,8 @@
                 </div>
                 <div class="card-body">
                     <div class="header">
-                        <input class="form-control" [(ngModel)]="searchText" (ngModelChange)="querySearch()" placeholder="Search...">
+                        <input class="form-control" [(ngModel)]="searchText" (ngModelChange)="querySearch()"
+                            placeholder="Search...">
                     </div>
                     <div class="body table-responsive">
                         <table class="table table-hover">
@@ -134,13 +161,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let pd of allUser | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
-                                    <td width="20%"> <img src="{{serverImgPath}}{{pd.imagePath}}" style="height: 50px; width:50px;" ></td>
+                                <tr
+                                    *ngFor="let pd of allUser | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
+                                    <td width="20%"> <img src="{{serverImgPath}}{{pd.imagePath}}"
+                                            style="height: 50px; width:50px;"></td>
                                     <td width="30%"> {{pd.name}} </td>
                                     <td width="30%"> {{pd.email}} </td>
                                     <td width="10%" *ngIf="pd.isActive=='Y'"> ✅ </td>
                                     <td width="10%" *ngIf="pd.isActive=='N'"> ❌ </td>
-                                  
+
                                     <td width="10px">
                                         <i class="fa fa-trash fa-lg text-danger" (click)="onDelete(pd.id)"></i>
                                     </td>
@@ -154,3 +183,21 @@
         </div>
     </div>
 </div>
+<style>
+    .icon-input {
+        position: relative;
+    }
+
+    .icon-input .fa {
+        position: absolute;
+        top: 50%;
+        left: 370px;
+        /* Adjust the left position as needed */
+        transform: translateY(-50%);
+    }
+
+    .icon-input input {
+        padding-left: 30px;
+        /* Adjust the padding to make space for the icon */
+    }
+</style>

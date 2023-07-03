@@ -112,6 +112,8 @@ export class ScaleComponent implements OnInit {
       });
   }
   onDelete(id: any) {
+    const confirmed = window.confirm('Are you sure you want to delete this customer enquiry?');
+    if(confirmed){
     this.service.Delete('scale', id).subscribe(
       () => {
         // success
@@ -125,6 +127,7 @@ export class ScaleComponent implements OnInit {
         this.toastr.error('Error while fetching data!', 'Eroor');
       }
     );
+    }
   }
   querySearch() {
     this.searchText=this.searchText?this.searchText:null;
@@ -132,6 +135,8 @@ export class ScaleComponent implements OnInit {
     this.service.GetById('filter-scale',this.searchText).subscribe(
       (success: any) => {
         this.allscale= success;
+        this.p = 1; // Reset pagination to the first page
+
       },
       error => {
         this.toastr.error('Error while fetching data!', 'Error.');

@@ -33,9 +33,10 @@ export class AddUserComponent implements OnInit {
 
   p: number = 1;
   searchText:any;
-
-
-
+  loadImage:boolean=false;
+	isView: boolean = false;
+  isView1: boolean = false;
+  initialConfirmPasswordValue:any;
 
   constructor(public formBuilder: FormBuilder, private toastr: ToastrService,
     private message: ConfirmationDialogService, private http: HttpClient, private service: AuthService) {
@@ -55,14 +56,30 @@ export class AddUserComponent implements OnInit {
       this.validateUser(this.addUserForm);
     });
     this.loadAllUser();
+    
 
   }
+  isViewed()
+	{
+		this.isView = !this.isView;
+    const confirmPasswordControl = this.addUserForm.get('password_confirmation');
+    if (confirmPasswordControl) {
+        confirmPasswordControl.setValue('');
+    }
+	}
+  isViewed1()
+	{
+		this.isView1 = !this.isView1;
+
+	}
+
   querySearch() {
     this.searchText=this.searchText?this.searchText:null;
     if(this.searchText != null){
     this.service.GetById('filter-activity',this.searchText).subscribe(
       (success: any) => {
         this.allUser= success;
+        this.p = 1; // Reset pagination to the first page
       },
       error => {
         this.toastr.error('Error while fetching data!', 'Error.');
@@ -130,6 +147,7 @@ export class AddUserComponent implements OnInit {
         this.percentage = Math.round(100 * event.loaded / event.total) + '%';
       } else if (event instanceof HttpResponse) {
         console.log('File uploaded successfully!' + JSON.stringify(event));
+        this.loadImage=true;
 
         this.user_image = null;
         this.percentage = Math.round(100 * 0) + '%';
@@ -141,6 +159,12 @@ export class AddUserComponent implements OnInit {
       this.toastr.error('Error while fetching data!', 'Error.');
 
     });
+
+  }
+  removeImage1(){
+    this.loadImage=false;
+    this.user_profile.patchValue("");
+    this.userImageSrc = "./assets/images/noImage.jpg";
 
   }
 
@@ -211,6 +235,8 @@ export class AddUserComponent implements OnInit {
       });
   }
   onDelete(id: any) {
+    const confirmed = window.confirm('Are you sure you want to delete this customer enquiry?');
+    if(confirmed){
     this.service.Delete('user', id).subscribe(
       () => {
         // success
@@ -225,4 +251,9 @@ export class AddUserComponent implements OnInit {
       }
     );
   }
+}
+removeImage(){
+  this.userImageSrc="./assets/images/noImage.jpg";
+
+}
 }

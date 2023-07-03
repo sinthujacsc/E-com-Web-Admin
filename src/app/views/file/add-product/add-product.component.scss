@@ -31,3 +31,5 @@
     max-height: 10rem;
     overflow: auto;
   }
+  .highlighted-item{background-color:blue;}
+  .ngx-select-dropdown .option-list .option.highlighted-item {background-color: yellow;}

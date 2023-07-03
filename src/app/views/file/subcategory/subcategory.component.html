@@ -50,7 +50,15 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <img style="width: 150px; height:150px;" [src]="subCategoryImageSrc">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <img style="width: 150px; height:150px;" [src]="subCategoryImageSrc">
+
+                                    </div>
+                                    <div *ngIf="loadedImage" class="col-md-2">
+                                        <a class="btn btn-primary" (click)="removeImage1()">X</a>
+                                    </div>
+                                </div>
                             </div>
 
 
@@ -60,7 +68,7 @@
                     </div>
                     <div class="card-footer" style="margin-bottom: 10px;">
                         <button style="float: left;margin-bottom: 10px;" type="submit" class="btn btn-sm btn-success" [disabled]="!subCategoryForm.valid"><i class="fa fa-dot-circle-o"></i> <b>Submit</b></button>
-                        <button style="float: right;margin-bottom: 10px;" type="reset" class="btn btn-sm btn-warning"><i class="fa fa-ban"></i><b>Reset</b> </button>
+                        <button style="float: right;margin-bottom: 10px;" (click)="removeImage()"type="reset" class="btn btn-sm btn-warning"><i class="fa fa-ban"></i><b>Reset</b> </button>
                     </div>
                 </form>
             </div>

@@ -18,6 +18,8 @@ export class LoginComponent {
 	ipAddress: any;
 	systemToken: any = {};
 	browsername: any;
+	isView: boolean = false;
+
 
 	constructor(private router: Router, private http: HttpClient, private toastr: ToastrService, private service: AuthService, private cookieService: CookieService) { }
 
@@ -32,7 +34,11 @@ export class LoginComponent {
 		//   }
 		this.getIpAddress();
 	}
+	isViewed()
+	{
+		this.isView = !this.isView;
 
+	}
 	onSubmit(form: NgForm) {
 		this.service.systemLogin(form.value).subscribe(
 			(res: any) => {

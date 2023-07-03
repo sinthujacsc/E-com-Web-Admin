@@ -59,11 +59,13 @@ export class BrandComponent implements OnInit {
     }
   }
   querySearch() {
+    
     this.searchText=this.searchText?this.searchText:null;
     if(this.searchText != null){
     this.service.GetById('filter-brand',this.searchText).subscribe(
       (success: any) => {
         this.allbrand= success;
+        this.p = 1; // Reset pagination to the first page
       },
       error => {
         this.toastr.error('Error while fetching data!', 'Error.');
@@ -126,6 +128,8 @@ export class BrandComponent implements OnInit {
       });
   }
   onDelete(id: any) {
+    const confirmed = window.confirm('Are you sure you want to delete this customer enquiry?');
+    if(confirmed){
     this.service.Delete('brand', id).subscribe(
       () => {
         // success
@@ -140,6 +144,7 @@ export class BrandComponent implements OnInit {
       }
     );
   }
+}
   onEdit(id: any) {
     this.service.GetById('brand', id).subscribe(
       (item: any) => {
@@ -166,4 +171,5 @@ export class BrandComponent implements OnInit {
     this.isChecked = 'Y';
     this.checked = true;
   }
+ 
 }

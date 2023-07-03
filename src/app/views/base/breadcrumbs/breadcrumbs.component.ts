@@ -11,18 +11,18 @@ export class BreadcrumbsComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = [
-      { label: 'Home', url: '/', attributes: { title: 'Home' } },
-      { label: 'Library', url: '/' },
+      { label: 'Home',attributes: { title: 'Home' } },
+      { label: 'Library' },
       { label: 'Data', url: '/dashboard/' },
-      { label: 'CoreUI', url: '/' }
+      { label: 'CoreUI' }
     ];
 
     setTimeout(() => {
       this.items = [
-        { label: 'CoreUI', url: '/' },
-        { label: 'Data', url: '/dashboard/' },
-        { label: 'Library', url: '/' },
-        { label: 'Home', url: '/', attributes: { title: 'Home' } }
+        { label: 'CoreUI'},
+        { label: 'Data' },
+        { label: 'Library' },
+        { label: 'Home', attributes: { title: 'Home' } }
       ];
     }, 5000);
   }

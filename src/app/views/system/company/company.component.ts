@@ -32,6 +32,7 @@ export class CompanyComponent implements OnInit {
   p: number = 1;
   serverImgPath = environment.img_path;
   companyImageSrc: any = "./assets/images/noImage.jpg";
+  loadImage:boolean=false;
   
 
   constructor(public formBuilder: FormBuilder, private toastr: ToastrService,
@@ -94,7 +95,7 @@ export class CompanyComponent implements OnInit {
         this.percentage = Math.round(100 * event.loaded / event.total) + '%';
       } else if (event instanceof HttpResponse) {
         console.log('Logo uploaded successfully!' + JSON.stringify(event));
-
+        this.loadImage=true;
         this.company_image = null;
         this.percentage = Math.round(100 * 0) + '%';
       }
@@ -105,6 +106,12 @@ export class CompanyComponent implements OnInit {
       this.toastr.error('Error while fetching data!', 'Error.');
 
     });
+
+  }
+  removeImage1(){
+    this.loadImage=false;
+    this.company_profile.patchValue("");
+    this.companyImageSrc =  "./assets/images/noImage.jpg";
 
   }
   checkValue(e: any) {
@@ -224,6 +231,9 @@ export class CompanyComponent implements OnInit {
     this.addCompanyForm.reset();
     this.isChecked = 'Y';
     this.checked = true;
+    this.companyImageSrc = "./assets/images/noImage.jpg";
+  }
+  removeImage(){
     this.companyImageSrc = "./assets/images/noImage.jpg";
   }
 }

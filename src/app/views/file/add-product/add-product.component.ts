@@ -1,5 +1,5 @@
 import { HttpClient, HttpEventType, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnyARecord } from 'dns';
@@ -17,6 +17,13 @@ import { ColorPickerService, Cmyk } from 'ngx-color-picker';
   styleUrls: ['./add-product.component.scss']
 })
 export class AddProductComponent implements OnInit {
+  @ViewChild('priceInput', { static: false }) priceInput!: ElementRef;
+  @ViewChild('discountRInput', { static: false }) discountRInput!: ElementRef;
+  @ViewChild('discountAInput', { static: false }) discountAInput!: ElementRef;
+  @ViewChild('vatRInput', { static: false }) vatRInput!: ElementRef;
+  @ViewChild('vatAInput', { static: false }) vatAInput!: ElementRef;
+
+
   addProductForm: any;
   allMainCategory: any;
   allsubCategory: any;
@@ -56,6 +63,8 @@ export class AddProductComponent implements OnInit {
   brandId:any;
   isSuccess: boolean = false;
   images:any;
+  loadedImage:boolean=false;
+
 
 
   selectedFiles?: FileList;
@@ -64,6 +73,7 @@ export class AddProductComponent implements OnInit {
 
   previews: string[] = [];
   imageInfos?: Observable<any>;
+  currentHoverIndex: number=-1;
 
 
  
@@ -91,18 +101,18 @@ export class AddProductComponent implements OnInit {
     this.addProductForm = this.formBuilder.group({
       images: this.formBuilder.array([]),
       nameOf: ['', [Validators.required]],
-      description: [''],
+      description: ['',[Validators.required]],
       isActive: [''],
-      mainCategory_id: ['', [Validators.required]],
-      subCategory_id: ['', [Validators.required]],
-      scale_id: ['', [Validators.required]],
-      brand_id: ['', [Validators.required]],
-      sku: ['', [Validators.required]],
-      price: ['', [Validators.required]],
-      discountRate: [''],
-      discountAmount: [''],
-      vatRate: [''],
-      vatAmount: [''],
+      mainCategory_id: ['',[Validators.required]],
+      subCategory_id: ['',[Validators.required]],
+      scale_id: ['',[Validators.required]],
+      brand_id: ['',[Validators.required]],
+      sku: [''],
+      price: ['0.00', [Validators.required]],
+      discountRate: ['0.00'],
+      discountAmount: ['0.00'],
+      vatRate: ['0.00'],
+      vatAmount: ['0.00'],
       isNew: [''],
 
 
@@ -155,18 +165,18 @@ export class AddProductComponent implements OnInit {
     let rows = this.addProductForm.get('images') as FormArray;
     rows.removeAt(rowIndex);
   }
-  selectionChanged(event:any){
-    this.mainCategoryId=event.value.id;
-  }
-  selectionChanged1(event:any){
-    this.subCategoryId=event.value.id;    
-  }
-  selectionChanged2(event:any){   
-    this.scaleId=event.value.id;
-  }
-  selectionChanged3(event:any){
-    this.brandId=event.value.id;
-  }
+  // selectionChanged(event:any){
+  //   this.mainCategoryId=event.value.id;
+  // }
+  // selectionChanged1(event:any){
+  //   this.subCategoryId=event.value.id;    
+  // }
+  // selectionChanged2(event:any){   
+  //   this.scaleId=event.value.id;
+  // }
+  // selectionChanged3(event:any){
+  //   this.brandId=event.value.id;
+  // }
   loadProductByCode() {
 
     this.service.GetById('product-by-code', this.productCode).subscribe(
@@ -188,10 +198,10 @@ export class AddProductComponent implements OnInit {
         this.addProductForm.controls['description'].setValue(this.particularProduct[0].description);
 
 
-        this.mainCategoryId=this.particularProduct[0].mainCategory_id;
-        this.subCategoryId=this.particularProduct[0].subCategory_id;
-        this.scaleId=this.particularProduct[0].scale_id;
-        this.brandId=this.particularProduct[0].brand_id;
+        // this.mainCategoryId=this.particularProduct[0].mainCategory_id;
+        // this.subCategoryId=this.particularProduct[0].subCategory_id;
+        // this.scaleId=this.particularProduct[0].scale_id;
+        // this.brandId=this.particularProduct[0].brand_id;
 
         if (this.particularProduct[0].isActive == 'Y') {
           this.isChecked = 'Y';
@@ -277,7 +287,7 @@ export class AddProductComponent implements OnInit {
         this.percentage = Math.round(100 * event.loaded / event.total) + '%';
       } else if (event instanceof HttpResponse) {
         console.log('File uploaded successfully!' + JSON.stringify(event));
-
+        this.loadedImage=true;
         this.product_image = null;
         this.percentage = Math.round(100 * 0) + '%';
       }
@@ -385,7 +395,81 @@ export class AddProductComponent implements OnInit {
     this.saveOrUpdate();
     // this.addProductForm.reset();
   }
+  convertToDecimal(inputValue: string) {
+    const inputNumber = parseInt(inputValue.replace(/\D/g, ''), 10);
+    let decimalValue: string;
 
+    if (isNaN(inputNumber)) {
+      decimalValue = '0.00';
+    } else {
+      const integerPart = Math.floor(inputNumber / 100);
+      const decimalPart = inputNumber % 100;
+      decimalValue = `${integerPart}.${decimalPart.toString().padStart(2, '0')}`;
+    }
+
+    this.priceInput.nativeElement.value = decimalValue;
+    this.addProductForm.get('price').setValue(decimalValue);
+  }
+  convertToDecimal1(inputValue: string) {
+    const inputNumber = parseInt(inputValue.replace(/\D/g, ''), 10);
+    let decimalValue: string;
+
+    if (isNaN(inputNumber)) {
+      decimalValue = '0.00';
+    } else {
+      const integerPart = Math.floor(inputNumber / 100);
+      const decimalPart = inputNumber % 100;
+      decimalValue = `${integerPart}.${decimalPart.toString().padStart(2, '0')}`;
+    }
+
+    this.discountRInput.nativeElement.value = decimalValue;
+    this.addProductForm.get('discountRate').setValue(decimalValue);
+  }
+  convertToDecimal2(inputValue: string) {
+    const inputNumber = parseInt(inputValue.replace(/\D/g, ''), 10);
+    let decimalValue: string;
+
+    if (isNaN(inputNumber)) {
+      decimalValue = '0.00';
+    } else {
+      const integerPart = Math.floor(inputNumber / 100);
+      const decimalPart = inputNumber % 100;
+      decimalValue = `${integerPart}.${decimalPart.toString().padStart(2, '0')}`;
+    }
+
+    this.discountAInput.nativeElement.value = decimalValue;
+    this.addProductForm.get('discountAmount').setValue(decimalValue);
+  }
+  convertToDecimal3(inputValue: string) {
+    const inputNumber = parseInt(inputValue.replace(/\D/g, ''), 10);
+    let decimalValue: string;
+
+    if (isNaN(inputNumber)) {
+      decimalValue = '0.00';
+    } else {
+      const integerPart = Math.floor(inputNumber / 100);
+      const decimalPart = inputNumber % 100;
+      decimalValue = `${integerPart}.${decimalPart.toString().padStart(2, '0')}`;
+    }
+
+    this.vatRInput.nativeElement.value = decimalValue;
+    this.addProductForm.get('vatRate').setValue(decimalValue);
+  }
+  convertToDecimal4(inputValue: string) {
+    const inputNumber = parseInt(inputValue.replace(/\D/g, ''), 10);
+    let decimalValue: string;
+
+    if (isNaN(inputNumber)) {
+      decimalValue = '0.00';
+    } else {
+      const integerPart = Math.floor(inputNumber / 100);
+      const decimalPart = inputNumber % 100;
+      decimalValue = `${integerPart}.${decimalPart.toString().padStart(2, '0')}`;
+    }
+
+    this.vatAInput.nativeElement.value = decimalValue;
+    this.addProductForm.get('vatAmount').setValue(decimalValue);
+  }
   loadAllMainCategory() {
     this.service.Get('select-maincategory').subscribe(
       (success: any) => {
@@ -438,12 +522,12 @@ export class AddProductComponent implements OnInit {
     this.product.description = this.addProductForm.get('description').value;
     this.product.isActive = this.isChecked;
     this.product.isNew = this.isCheckedNew;
-    this.product.mainCategory_id = this.mainCategoryId;
-    this.product.subCategory_id = this.subCategoryId;
-    this.product.scale_id = this.scaleId;
-    this.product.brand_id = this.brandId;
+    this.product.mainCategory_id = this.addProductForm.get('mainCategory_id').value;
+    this.product.subCategory_id = this.addProductForm.get('subCategory_id').value;
+    this.product.scale_id = this.addProductForm.get('scale_id').value;
+    this.product.brand_id = this.addProductForm.get('brand_id').value;
     this.product.price = this.addProductForm.get('price').value;
-    this.product.sku = this.addProductForm.get('sku').value;
+    this.product.sku = 0;
     this.product.discountRate = this.addProductForm.get('discountRate').value ? this.addProductForm.get('discountRate').value : 0;
     this.product.discountAmount = this.addProductForm.get('discountAmount').value ? this.addProductForm.get('discountAmount').value : 0;
     this.product.vatRate = this.addProductForm.get('vatRate').value ? this.addProductForm.get('vatRate').value : 0;
@@ -533,5 +617,17 @@ export class AddProductComponent implements OnInit {
     this.isCheckedNew = 'Y';
     this.checkedNew = true;
     this.productImageSrc = "./assets/images/noImage.jpg";
+  }
+  removeImage(){
+    this.productImageSrc="./assets/images/noImage.jpg";
+
+    // alert('');
+  }
+  removeImage1(){
+    this.loadedImage=false;
+    this.product_profile.patchValue("");
+    this.productImageSrc="./assets/images/noImage.jpg";
+
+    // alert('');
   }
 }
